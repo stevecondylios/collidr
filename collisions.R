@@ -20,29 +20,30 @@ packages <- cran_splash %>% html_nodes("table a") %>% html_attr("href") %>% strs
 links <- cran_splash %>% html_nodes("table a") %>% html_attr("href") %>% substr(., 6, nchar(.)) %>%
   paste0("https://cran.r-project.org", .)
 
-
-
-# Download pdf
-
 reference_manual_links <- packages %>% paste0("https://cran.r-project.org/web/packages/", . , "/", ., ".pdf")
-
-
 if(!dir.exists("temp")) { system("mkdir temp") }
 
+packages_and_functions_dataframe <- data.frame("package_name"=as.character(), "function_name"=as.character())
+total_number_of_functions <- 0
 
 
 
-output_dataframe <- data.frame("package_name"=as.character(), "function_name"=as.character())
+
 
 
 for (i in 1:length(packages)) {
 
-  print(paste0("Scraping package ", i, " of ", length(packages), " - ", packages[i]))
+  
+  # i <- 1
+  
+  
+  print(paste0("Scraping package ", i, " of ", length(packages), " - ", packages[i], 
+               " (", total_number_of_functions, " functions collected so far.."))
   
   reference_manual_links[i] %>% download.file(., paste0("temp/", packages[i]))
   
   manual_pdf <-  pdf_text(paste0("temp/", packages[i]))
-  manual_pdf %>% paste0(.)
+  # manual_pdf %>% paste0(., collapse="")
   
   
   
@@ -64,8 +65,10 @@ for (i in 1:length(packages)) {
   relevant_temp <- temp[[1]] %>% .[(2):(length_temp)] %>% unlist %>% paste0(., collapse="")
   
   
+  # Note the number of spaces after "\nIndex" is sufficiently short to allow for tens of thousands
+  # pages in the manual, which presumably won't ever happen 
   
-  relevant_temp <- relevant_temp %>% strsplit(., "\nIndex                                                                                                  ") %>%
+  relevant_temp <- relevant_temp %>% strsplit(., "\nIndex                                                                                   ") %>%
     .[[1]] %>% .[1]
   
   # Logic: strsplit every space, then discard any ".", then discard any strings containing \n
@@ -88,17 +91,73 @@ for (i in 1:length(packages)) {
   function_names <- relevant_temp %>% strsplit(. , " ") %>% unlist %>% {.[!grepl("\n", .)] } %>% 
   { .[!(nchar(.) == 1 | nchar(.) == 0)] }
   
+  total_number_of_functions <- total_number_of_functions + length(function_names)
+  
   package_names <- rep(packages[i], length(function_names))
   
   output <- data.frame(package_names, function_names, stringsAsFactors = FALSE)
   
-  output_dataframe <- rbind(output_dataframe, output)
+  packages_and_functions_dataframe <- rbind(packages_and_functions_dataframe, output)
 
 }
 
 
 
 
+saveRDS(packages_and_functions_dataframe, "packages_and_functions_dataframe.RDS")
+
+packages_and_functions_dataframe <- readRDS("packages_and_functions_dataframe.RDS")
+
+
+
+
+
+
+
+check_collisions <- function(function_or_package_name) {
+  
+  # if(missing(check_packages)) { check_packages <- TRUE }
+  # if(missing(check_functions)) { check_functions <- TRUE }
+  if(missing(function_or_package_name)) { stop("Please provide a function or package name to check") }
+
+  # Test single function name
+  function_or_package_name <- "a3.r2"
+  
+  # Test multiple function names
+  function_or_package_name <- c("a3.r2", "xtable.A3")
+  
+  # Returns data.frame of function name collisions
+  function_collisions <- which(packages_and_functions_dataframe$function_names %in% function_or_package_name) %>% 
+    packages_and_functions_dataframe[., ]
+  
+  if(function_collisions %>% nrow %>% {. > 0 }) { function_collisions_present <- TRUE} else { 
+    function_collisions_present <- FALSE}
+  
+  # Returns whether or not a package name collision as occurred
+  package_collision_present <- packages_and_functions_dataframe$package_names %>% unique %>% 
+    { . %in% function_or_package_name } %>% sum %>% {. > 0}
+  
+  output_list <- list("packages"=c(), "functions"=c())
+  
+  if(package_collision_present)
+  
+  
+  
+  
+}
+
+
+
+
+
+
+which(unique_functions %in% function_or_package_name)
+which(function_or_package_name %in% unique_functions)
+
+
+which("b" %in% c("a", "b", "c"))
+
+which(c("a", "b", "c") %in% "b")
 
 
 
