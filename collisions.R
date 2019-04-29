@@ -29,16 +29,16 @@ total_number_of_functions <- 0
 
 
 
-
-
-for (i in 1:length(packages)) {
+# saveRDS(packages_and_functions_dataframe, "packages_and_functions_dataframe_first_1670.rds")
+# packages_and_functions_dataframe <- readRDS("packages_and_functions_dataframe_first_1670.rds")
+for (i in 1671:length(packages)) {
 
   
   # i <- 1
   
   
   print(paste0("Scraping package ", i, " of ", length(packages), " - ", packages[i], 
-               " (", total_number_of_functions, " functions collected so far.."))
+               " (", total_number_of_functions, " functions collected so far)"))
   
   reference_manual_links[i] %>% download.file(., paste0("temp/", packages[i]))
   
@@ -68,7 +68,8 @@ for (i in 1:length(packages)) {
   # Note the number of spaces after "\nIndex" is sufficiently short to allow for tens of thousands
   # pages in the manual, which presumably won't ever happen 
   
-  relevant_temp <- relevant_temp %>% strsplit(., "\nIndex                                                                                   ") %>%
+  relevant_temp <- relevant_temp %>% 
+    strsplit(., "\nIndex                                                                      ") %>%
     .[[1]] %>% .[1]
   
   # Logic: strsplit every space, then discard any ".", then discard any strings containing \n
@@ -114,7 +115,7 @@ packages_and_functions_dataframe <- readRDS("packages_and_functions_dataframe.RD
 
 
 
-check_collisions <- function(function_or_package_name) {
+collisions <- function(function_or_package_name) {
   
   # if(missing(check_packages)) { check_packages <- TRUE }
   # if(missing(check_functions)) { check_functions <- TRUE }
