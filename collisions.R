@@ -40,9 +40,9 @@ for (i in 1671:length(packages)) {
   print(paste0("Scraping package ", i, " of ", length(packages), " - ", packages[i], 
                " (", total_number_of_functions, " functions collected so far)"))
   
-  reference_manual_links[i] %>% download.file(., paste0("temp/", packages[i]))
   
-  manual_pdf <-  pdf_text(paste0("temp/", packages[i]))
+  
+  manual_pdf <-  reference_manual_links[i] %>% pdf_text
   # manual_pdf %>% paste0(., collapse="")
   
   
@@ -64,13 +64,14 @@ for (i in 1671:length(packages)) {
   length_temp <- temp[[1]] %>% length
   relevant_temp <- temp[[1]] %>% .[(2):(length_temp)] %>% unlist %>% paste0(., collapse="")
   
-  
   # Note the number of spaces after "\nIndex" is sufficiently short to allow for tens of thousands
   # pages in the manual, which presumably won't ever happen 
   
   relevant_temp <- relevant_temp %>% 
-    strsplit(., "\nIndex                                                                      ") %>%
+    strsplit(., "\nIndex                                                                      ",
+             fixed = TRUE) %>%
     .[[1]] %>% .[1]
+  
   
   # Logic: strsplit every space, then discard any ".", then discard any strings containing \n
   # grepl("a", c("abc", "def")) # [1]  TRUE FALSE
