@@ -41,17 +41,20 @@ for (i in 4511:length(packages)) {
                " (", total_number_of_functions, " functions collected so far)"))
   
   
-  
+  skip_to_next <<- FALSE
   tryCatch(manual_pdf <-  reference_manual_links[i] %>% pdf_text, 
-           {
-             missing_package_urls <- c(missing_package_urls, reference_manual_links[i])
+           error = function(e) {
+             missing_package_urls <<- c(missing_package_urls, reference_manual_links[i])
              print(paste0("Skipped package ", packages[i]))
-             next
+             skip_to_next <<- TRUE
            }
   )
+  
+  if(skip_to_next) { next } 
+  
+  
+  
   # manual_pdf %>% paste0(., collapse="")
-  
-  
   
   # Note
   # a <- list(c("a","b"), c("c", "d"))
