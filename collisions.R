@@ -116,7 +116,9 @@ for (i in 4511:length(packages)) {
 
 
 saveRDS(packages_and_functions_dataframe, "packages_and_functions_dataframe.RDS")
+saveRDS(missing_package_urls, "missing_package_urls.RDS")
 
+missing_package_urls
 packages_and_functions_dataframe <- readRDS("packages_and_functions_dataframe.RDS")
 
 
