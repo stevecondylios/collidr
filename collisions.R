@@ -26,12 +26,12 @@ if(!dir.exists("temp")) { system("mkdir temp") }
 packages_and_functions_dataframe <- data.frame("package_name"=as.character(), "function_name"=as.character())
 total_number_of_functions <- 0
 
-
+missing_package_urls <- c()
 
 
 # saveRDS(packages_and_functions_dataframe, "packages_and_functions_dataframe_first_1670.rds")
 # packages_and_functions_dataframe <- readRDS("packages_and_functions_dataframe_first_1670.rds")
-for (i in 1671:length(packages)) {
+for (i in 4511:length(packages)) {
 
   
   # i <- 1
@@ -42,7 +42,13 @@ for (i in 1671:length(packages)) {
   
   
   
-  manual_pdf <-  reference_manual_links[i] %>% pdf_text
+  tryCatch(manual_pdf <-  reference_manual_links[i] %>% pdf_text, 
+           {
+             missing_package_urls <- c(missing_package_urls, reference_manual_links[i])
+             print(paste0("Skipped package ", packages[i]))
+             next
+           }
+  )
   # manual_pdf %>% paste0(., collapse="")
   
   
