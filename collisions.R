@@ -6,10 +6,6 @@ library(data.table)
 library(stringr)
 
 
-
-
-
-
 # Get package names and links from CRAN
 
 cran_splash <- read_html("https://cran.r-project.org/web/packages/available_packages_by_name.html")
@@ -51,8 +47,6 @@ for (i in 4511:length(packages)) {
   )
   
   if(skip_to_next) { next } 
-  
-  
   
   # manual_pdf %>% paste0(., collapse="")
   
@@ -115,12 +109,12 @@ for (i in 4511:length(packages)) {
 
 
 
-saveRDS(packages_and_functions_dataframe, "packages_and_functions_dataframe.RDS")
-saveRDS(missing_package_urls, "missing_package_urls.RDS")
-
-missing_package_urls
-packages_and_functions_dataframe <- readRDS("packages_and_functions_dataframe.RDS")
-
+# saveRDS(packages_and_functions_dataframe, "packages_and_functions_dataframe.RDS")
+# saveRDS(missing_package_urls, "missing_package_urls.RDS")
+# 
+# missing_package_urls
+# packages_and_functions_dataframe <- readRDS("packages_and_functions_dataframe.RDS")
+# 
 
 
 
