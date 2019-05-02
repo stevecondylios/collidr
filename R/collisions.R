@@ -1,4 +1,3 @@
-
 #' Check for Namespace Collisions
 #'
 #' Check for namespace collisions with functions and packages on CRAN
@@ -37,13 +36,14 @@
 library(dplyr)
 library(stringr)
 
-data(packages_and_functions_dataframe)
+
 
 CRAN_collisions <- function(function_or_package_name) {
-
+  packages_and_functions_dataframe <- NULL
   # if(missing(check_packages)) { check_packages <- TRUE }
   # if(missing(check_functions)) { check_functions <- TRUE }
   # cran_packages <- get(load("data/packages_and_functions_dataframe.RData"))
+  data(packages_and_functions_dataframe, envir = environment())
   cran_packages <- packages_and_functions_dataframe
   if(missing(function_or_package_name)) { stop("Please provide a function or package name to check") }
 
@@ -104,12 +104,13 @@ CRAN_collisions <- function(function_or_package_name) {
 library(dplyr)
 library(stringr)
 
-data(packages_and_functions_dataframe)
+
 
 CRAN_package_collisions <- function(package_name) {
-
+  packages_and_functions_dataframe <- NULL
   # if(missing(check_packages)) { check_packages <- TRUE }
   # if(missing(check_functions)) { check_functions <- TRUE }
+  data(packages_and_functions_dataframe, envir = environment())
   cran_packages <- packages_and_functions_dataframe
   if(missing(package_name)) { stop("Please provide a function or package name to check") }
 
@@ -168,12 +169,13 @@ CRAN_package_collisions <- function(package_name) {
 library(dplyr)
 library(stringr)
 
-data(packages_and_functions_dataframe)
+
 
 CRAN_function_collisions <- function(function_name) {
-
+  packages_and_functions_dataframe <- NULL
   # if(missing(check_packages)) { check_packages <- TRUE }
   # if(missing(check_functions)) { check_functions <- TRUE }
+  data(packages_and_functions_dataframe, envir = environment())
   cran_packages <- packages_and_functions_dataframe
   if(missing(function_name)) { stop("Please provide a function or package name to check") }
 
@@ -224,9 +226,11 @@ CRAN_function_collisions <- function(function_name) {
 #'
 
 
-data(packages_and_functions_dataframe)
+
 
 CRAN_packages_and_functions <- function() {
+  packages_and_functions_dataframe <- NULL
+  data(packages_and_functions_dataframe, envir = environment())
   cran_packages <- packages_and_functions_dataframe
   cran_packages
 }
@@ -261,9 +265,11 @@ CRAN_packages_and_functions()
 #'
 
 
-data(packages_and_functions_dataframe)
+
 
 CRAN_packages <- function() {
+  packages_and_functions_dataframe <- NULL
+  data(packages_and_functions_dataframe, envir = environment())
   cran_packages <- packages_and_functions_dataframe
   cran_packages$package_names %>% unique
 }
@@ -296,9 +302,11 @@ CRAN_packages()
 #'
 
 
-data(packages_and_functions_dataframe)
+
 
 CRAN_functions <- function() {
+  packages_and_functions_dataframe <- NULL
+  data(packages_and_functions_dataframe, envir = environment())
   cran_packages <- packages_and_functions_dataframe
   cran_packages$function_names %>% unique
 }
