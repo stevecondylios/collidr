@@ -10,6 +10,7 @@
 #'
 #' @import dplyr
 #' @import stringr
+#' @importFrom utils data
 #'
 #' @export
 #'
@@ -36,13 +37,14 @@
 library(dplyr)
 library(stringr)
 
-
+data(packages_and_functions_dataframe)
 
 CRAN_collisions <- function(function_or_package_name) {
 
   # if(missing(check_packages)) { check_packages <- TRUE }
   # if(missing(check_functions)) { check_functions <- TRUE }
-  cran_packages <- get(load("data/packages_and_functions_dataframe.RData"))
+  # cran_packages <- get(load("data/packages_and_functions_dataframe.RData"))
+  cran_packages <- packages_and_functions_dataframe
   if(missing(function_or_package_name)) { stop("Please provide a function or package name to check") }
 
 
@@ -82,6 +84,7 @@ CRAN_collisions <- function(function_or_package_name) {
 #'
 #' @import dplyr
 #' @import stringr
+#' @importFrom utils data
 #'
 #' @export
 #'
@@ -101,13 +104,13 @@ CRAN_collisions <- function(function_or_package_name) {
 library(dplyr)
 library(stringr)
 
-
+data(packages_and_functions_dataframe)
 
 CRAN_package_collisions <- function(package_name) {
 
   # if(missing(check_packages)) { check_packages <- TRUE }
   # if(missing(check_functions)) { check_functions <- TRUE }
-  cran_packages <- get(load("data/packages_and_functions_dataframe.RData"))
+  cran_packages <- packages_and_functions_dataframe
   if(missing(package_name)) { stop("Please provide a function or package name to check") }
 
 
@@ -146,6 +149,7 @@ CRAN_package_collisions <- function(package_name) {
 #'
 #' @import dplyr
 #' @import stringr
+#' @importFrom utils data
 #'
 #' @export
 #'
@@ -164,13 +168,13 @@ CRAN_package_collisions <- function(package_name) {
 library(dplyr)
 library(stringr)
 
-
+data(packages_and_functions_dataframe)
 
 CRAN_function_collisions <- function(function_name) {
 
   # if(missing(check_packages)) { check_packages <- TRUE }
   # if(missing(check_functions)) { check_functions <- TRUE }
-  cran_packages <- get(load("data/packages_and_functions_dataframe.RData"))
+  cran_packages <- packages_and_functions_dataframe
   if(missing(function_name)) { stop("Please provide a function or package name to check") }
 
 
@@ -208,6 +212,7 @@ CRAN_function_collisions <- function(function_name) {
 #' @usage CRAN_packages_and_functions()
 #'
 #' @import dplyr
+#' @importFrom utils data
 #'
 #' @export
 #'
@@ -219,10 +224,10 @@ CRAN_function_collisions <- function(function_name) {
 #'
 
 
-
+data(packages_and_functions_dataframe)
 
 CRAN_packages_and_functions <- function() {
-  cran_packages <- get(load("data/packages_and_functions_dataframe.RData"))
+  cran_packages <- packages_and_functions_dataframe
   cran_packages
 }
 
@@ -244,6 +249,7 @@ CRAN_packages_and_functions()
 #' @usage CRAN_packages()
 #'
 #' @import dplyr
+#' @importFrom utils data
 #'
 #' @export
 #'
@@ -255,10 +261,10 @@ CRAN_packages_and_functions()
 #'
 
 
-
+data(packages_and_functions_dataframe)
 
 CRAN_packages <- function() {
-  cran_packages <- get(load("data/packages_and_functions_dataframe.RData"))
+  cran_packages <- packages_and_functions_dataframe
   cran_packages$package_names %>% unique
 }
 
@@ -276,6 +282,7 @@ CRAN_packages()
 #' @name CRAN_functions
 #'
 #' @usage CRAN_functions()
+#' @importFrom utils data
 #'
 #' @import dplyr
 #'
@@ -289,10 +296,10 @@ CRAN_packages()
 #'
 
 
-
+data(packages_and_functions_dataframe)
 
 CRAN_functions <- function() {
-  cran_packages <- get(load("data/packages_and_functions_dataframe.RData"))
+  cran_packages <- packages_and_functions_dataframe
   cran_packages$function_names %>% unique
 }
 
