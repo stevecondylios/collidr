@@ -42,7 +42,7 @@ CRAN_collisions <- function(function_or_package_name) {
 
   # if(missing(check_packages)) { check_packages <- TRUE }
   # if(missing(check_functions)) { check_functions <- TRUE }
-  cran_packages <- readRDS("data/packages_and_functions_dataframe.rds")
+  cran_packages <- get(load("data/packages_and_functions_dataframe.RData"))
   if(missing(function_or_package_name)) { stop("Please provide a function or package name to check") }
 
 
@@ -107,7 +107,7 @@ CRAN_package_collisions <- function(package_name) {
 
   # if(missing(check_packages)) { check_packages <- TRUE }
   # if(missing(check_functions)) { check_functions <- TRUE }
-  cran_packages <- readRDS("data/packages_and_functions_dataframe.rds")
+  cran_packages <- get(load("data/packages_and_functions_dataframe.RData"))
   if(missing(package_name)) { stop("Please provide a function or package name to check") }
 
 
@@ -170,7 +170,7 @@ CRAN_function_collisions <- function(function_name) {
 
   # if(missing(check_packages)) { check_packages <- TRUE }
   # if(missing(check_functions)) { check_functions <- TRUE }
-  cran_packages <- readRDS("data/packages_and_functions_dataframe.rds")
+  cran_packages <- get(load("data/packages_and_functions_dataframe.RData"))
   if(missing(function_name)) { stop("Please provide a function or package name to check") }
 
 
@@ -222,7 +222,7 @@ CRAN_function_collisions <- function(function_name) {
 
 
 CRAN_packages_and_functions <- function() {
-  cran_packages <- readRDS("data/packages_and_functions_dataframe.rds")
+  cran_packages <- get(load("data/packages_and_functions_dataframe.RData"))
   cran_packages
 }
 
@@ -258,7 +258,7 @@ CRAN_packages_and_functions()
 
 
 CRAN_packages <- function() {
-  cran_packages <- readRDS("data/packages_and_functions_dataframe.rds")
+  cran_packages <- get(load("data/packages_and_functions_dataframe.RData"))
   cran_packages$package_names %>% unique
 }
 
@@ -292,7 +292,7 @@ CRAN_packages()
 
 
 CRAN_functions <- function() {
-  cran_packages <- readRDS("data/packages_and_functions_dataframe.rds")
+  cran_packages <- get(load("data/packages_and_functions_dataframe.RData"))
   cran_packages$function_names %>% unique
 }
 
