@@ -33,8 +33,6 @@
 #'
 #'
 #'
-library(dplyr)
-library(stringr)
 
 
 
@@ -101,8 +99,6 @@ CRAN_collisions <- function(function_or_package_name) {
 #'
 #'
 #'
-library(dplyr)
-library(stringr)
 
 
 
@@ -166,8 +162,6 @@ CRAN_package_collisions <- function(package_name) {
 #'
 #'
 #'
-library(dplyr)
-library(stringr)
 
 
 
@@ -235,7 +229,6 @@ CRAN_packages_and_functions <- function() {
   cran_packages
 }
 
-CRAN_packages_and_functions()
 
 
 
@@ -274,7 +267,7 @@ CRAN_packages <- function() {
   cran_packages$package_names %>% unique
 }
 
-CRAN_packages()
+
 
 
 
@@ -311,7 +304,6 @@ CRAN_functions <- function() {
   cran_packages$function_names %>% unique
 }
 
-CRAN_functions()
 
 
 
@@ -321,6 +313,32 @@ CRAN_functions()
 
 
 
+
+
+#' Retrieve a more up to date data.frame of packages and functions from CRAN
+#'
+#' Retrieve a more up to date data.frame of packages and functions from CRAN
+#' @name retrieve_paf_dataframe
+#'
+#' @usage retrieve_paf_dataframe()
+#' @importFrom utils data
+#'
+#' @import dplyr jsonlite
+#' @import jsonlite
+#' @export
+#'
+#' @examples
+#'\dontrun{
+#' # Retrieve CRAN functions
+#' new_packages_and_functions_data <- retrieve_paf_dataframe()
+#'}
+#'
+#'
+retrieve_paf_dataframe <- function() {
+  updated_at <- c()
+  json_glob <- fromJSON("http://www.collidr-api.com/v1/packages_and_functions.json") %>%
+    as.data.frame %>% `colnames<-`(c("package_names", "function_names"))
+}
 
 
 
