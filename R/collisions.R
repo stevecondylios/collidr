@@ -132,9 +132,6 @@ CRAN_package_collisions <- function(package_name) {
 
 
 
-
-
-
 #' Check for Namespace Collisions
 #'
 #' Check for namespace collisions with functions on CRAN
@@ -207,6 +204,8 @@ CRAN_function_collisions <- function(function_name) {
 #'
 #' @usage CRAN_packages_and_functions()
 #'
+#'
+#'
 #' @import dplyr
 #' @importFrom utils data
 #'
@@ -229,6 +228,9 @@ CRAN_packages_and_functions <- function() {
   cran_packages
 }
 
+
+#' @rdname CRAN_packages_and_functions
+CRANpf <- CRAN_packages_and_functions
 
 
 
@@ -259,7 +261,6 @@ CRAN_packages_and_functions <- function() {
 
 
 
-
 CRAN_packages <- function() {
   packages_and_functions_dataframe <- NULL
   data(packages_and_functions_dataframe, envir = environment())
@@ -268,6 +269,8 @@ CRAN_packages <- function() {
 }
 
 
+#' @rdname CRAN_packages
+CRANp <- CRAN_packages
 
 
 
@@ -306,6 +309,8 @@ CRAN_functions <- function() {
 
 
 
+#' @rdname CRAN_functions
+CRANf <- CRAN_functions
 
 
 
@@ -318,9 +323,10 @@ CRAN_functions <- function() {
 #' Retrieve a more up to date data.frame of packages and functions from CRAN
 #'
 #' Retrieve a more up to date data.frame of packages and functions from CRAN
-#' @name retrieve_paf_dataframe
+#' @name getCRANpfd
 #'
-#' @usage retrieve_paf_dataframe()
+#' @usage getCRANpfd(api_key)
+#' @param api_key An API key for collidr-api
 #' @importFrom utils data
 #'
 #' @import dplyr jsonlite
@@ -330,15 +336,24 @@ CRAN_functions <- function() {
 #' @examples
 #'\dontrun{
 #' # Retrieve CRAN functions
-#' new_packages_and_functions_data <- retrieve_paf_dataframe()
+#' updated_pfd <- getCRANpfd()
 #'}
 #'
 #'
-retrieve_paf_dataframe <- function() {
+#'
+getCRANpfd <- function(api_key) {
   updated_at <- c()
-  json_glob <- fromJSON("http://www.collidr-api.com/v1/packages_and_functions.json") %>%
-    as.data.frame %>% `colnames<-`(c("package_names", "function_names"))
+  message("Retrieving packages and functions dataframe - this usually takes 10 - 30 seconds")
+  if(missing(api_key)) {api_key <- "pvTKXjn3nw_BdG-bnwOyqA"}
+  tryCatch(paste0("http://www.collidr-api.com/v1/packages_and_functions/", api_key, ".json") %>%
+             fromJSON %>% as.data.frame %>% `colnames<-`(c("package_names", "function_names")),
+           error=function(e) { stop("The collidr API appears to be down - this probably means it's
+                                    being updated - please try again later") })
 }
+
+
+
+
 
 
 

@@ -2,9 +2,12 @@
 % Please edit documentation in R/collisions.R
 \name{CRAN_packages_and_functions}
 \alias{CRAN_packages_and_functions}
+\alias{CRANpf}
 \title{Show the packages and functions that are on CRAN}
 \usage{
 CRAN_packages_and_functions()
+
+CRANpf()
 }
 \description{
 Retrieve functions from CRAN.

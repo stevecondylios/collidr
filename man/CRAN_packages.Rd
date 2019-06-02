@@ -2,9 +2,12 @@
 % Please edit documentation in R/collisions.R
 \name{CRAN_packages}
 \alias{CRAN_packages}
+\alias{CRANp}
 \title{Show the packages that are on CRAN}
 \usage{
 CRAN_packages()
+
+CRANp()
 }
 \description{
 Retrieve a list of packages on CRAN.
