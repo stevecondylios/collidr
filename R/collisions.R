@@ -347,7 +347,8 @@ getCRANpfd <- function(api_key) {
   if(missing(api_key)) {api_key <- "pvTKXjn3nw_BdG-bnwOyqA"}
   tryCatch(paste0("http://www.collidr-api.com/v1/packages_and_functions/", api_key, ".json") %>%
              fromJSON %>% as.data.frame %>% `colnames<-`(c("package_names", "function_names")),
-           error=function(e) { stop("API temporarily unavailable - please try again later") })
+           error=function(e) { stop("The collidr API appears to be down - this probably means it's
+                                    being updated - please try again later") })
 }
 
 
