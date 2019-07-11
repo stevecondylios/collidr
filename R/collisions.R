@@ -341,17 +341,26 @@ CRANf <- CRAN_functions
 #'
 #'
 #'
-getCRANpfd <- function(api_key) {
-  updated_at <- c()
-  message("Retrieving packages and functions dataframe - this usually takes 10 - 30 seconds")
-  if(missing(api_key)) {api_key <- "pvTKXjn3nw_BdG-bnwOyqA"}
-  tryCatch(paste0("http://www.collidr-api.com/v1/packages_and_functions/", api_key, ".json") %>%
-             fromJSON %>% as.data.frame %>% `colnames<-`(c("package_names", "function_names")),
-           error=function(e) { stop("The collidr API appears to be down - this probably means it's
+getCRANpfd <- function(api_key, last_updated = FALSE) {
+
+  print("Retrieving packages and functions dataframe - this usually takes 10 - 30 seconds")
+  if(missing(api_key)) {api_key <- "ImT9osewvsrtvoYyCQP7pw"}
+  pfd <- tryCatch(paste0("http://www.collidr-api.com/flatfiles/", api_key) %>%
+                    fromJSON %>% as.data.frame %>% `colnames<-`(c("package_names", "function_names")),
+                  error=function(e) { stop("The collidr API appears to be down - this probably means it's
                                     being updated - please try again later") })
+
+  if(last_updated) {
+    print("Retrieving time of last update")
+    last_updated_url <- paste0("http://www.collidr-api.com/flatfiles/",
+                               api_key,
+                               "/lastupdated")
+    last_updated <- fromJSON(last_updated_url)
+    attr(pfd, "lastupdated") <- last_updated
+  }
+
+  return(pfd)
 }
-
-
 
 
 
