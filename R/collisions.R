@@ -349,6 +349,8 @@ getCRANpfd <- function(api_key, last_updated = FALSE) {
                     fromJSON %>% as.data.frame %>% `colnames<-`(c("package_names", "function_names")),
                   error=function(e) { stop("The collidr API appears to be down - this probably means it's
                                     being updated - please try again later") })
+  pfd <- pfd[!duplicated(pfd),]
+  pfd <- pfd %>% arrange(package_names, function_names)
 
   if(last_updated) {
     print("Retrieving time of last update")
