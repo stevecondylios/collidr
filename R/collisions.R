@@ -343,7 +343,7 @@ CRANf <- CRAN_functions
 #'
 getCRANpfd <- function(api_key, last_updated = FALSE) {
 
-  print("Retrieving packages and functions dataframe - this usually takes 10 - 30 seconds")
+  print("Retrieving packages and functions dataframe - this typically takes 10 - 30 seconds")
   if(missing(api_key)) {api_key <- "ImT9osewvsrtvoYyCQP7pw"}
   pfd <- tryCatch(paste0("http://www.collidr-api.com/flatfiles/", api_key) %>%
                     fromJSON %>% as.data.frame %>% `colnames<-`(c("package_names", "function_names")),
