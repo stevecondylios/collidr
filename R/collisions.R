@@ -323,9 +323,11 @@ CRANf <- CRAN_functions
 #' Retrieve a more up to date data.frame of packages and functions from CRAN
 #'
 #' Retrieve a more up to date data.frame of packages and functions from CRAN
-#' @name getCRANpfd
+#' @name getCRAN
 #'
-#' @usage getCRANpfd(api_key)
+#' @usage getCRAN(last_updated, api_key)
+#' @param last_updated Set to TRUE to return the timestamp of the last update to the CRAN
+#' database file. Access via attributes()
 #' @param api_key An API key for collidr-api
 #' @importFrom utils data
 #'
@@ -336,21 +338,21 @@ CRANf <- CRAN_functions
 #' @examples
 #'\dontrun{
 #' # Retrieve CRAN functions
-#' updated_pfd <- getCRANpfd()
+#' CRAN_updated <- getCRAN()
 #'}
 #'
 #'
 #'
-getCRANpfd <- function(api_key, last_updated = FALSE) {
+getCRAN <- function(last_updated = FALSE, api_key) {
 
-  print("Retrieving packages and functions dataframe - this typically takes 10 - 30 seconds")
+  print("Retrieving CRAN data..")
   if(missing(api_key)) {api_key <- "ImT9osewvsrtvoYyCQP7pw"}
   pfd <- tryCatch(paste0("http://www.collidr-api.com/flatfiles/", api_key) %>%
                     fromJSON %>% as.data.frame %>% `colnames<-`(c("package_names", "function_names")),
-                  error=function(e) { stop("The collidr API appears to be down - this probably means it's
-                                    being updated - please try again later") })
+                  error=function(e) { stop("The collidr API is offline for maintenance
+                                           - please try again later") })
   pfd <- pfd[!duplicated(pfd),]
-  pfd <- pfd %>% arrange(package_names, function_names)
+  pfd <- pfd %>% arrange(.data$package_names, .data$function_names)
 
   if(last_updated) {
     print("Retrieving time of last update")
@@ -358,7 +360,8 @@ getCRANpfd <- function(api_key, last_updated = FALSE) {
                                api_key,
                                "/lastupdated")
     last_updated <- fromJSON(last_updated_url)
-    attr(pfd, "lastupdated") <- last_updated
+    attr(pfd, "last_updated") <- last_updated
+    print(paste0("CRAN data last updated ", last_updated))
   }
 
   return(pfd)
