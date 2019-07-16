@@ -4,7 +4,7 @@
 #'
 #' @docType data
 #'
-#' @usage data(packages_and_functions_dataframe)
+#' @usage data(CRANdf)
 #'
 #'
 #' @keywords datasets
@@ -13,7 +13,7 @@
 #' @source The Comprehensive R Archive Network, <https://cran.r-project.org/web/packages/available_packages_by_name.html>
 #'
 #' @examples
-#' data(packages_and_functions_dataframe)
-#' packages <- packages_and_functions_dataframe$package_names
-#' functions <- packages_and_functions_dataframe$function_names
-"packages_and_functions_dataframe"
+#' data(CRANdf)
+#' packages <- CRANdf$package_names
+#' functions <- CRANdf$function_names
+"CRANdf"

@@ -5,16 +5,19 @@
 \alias{CRANp}
 \title{Show the packages that are on CRAN}
 \usage{
-CRAN_packages()
+CRAN_packages(CRANdf)
 
-CRANp()
+CRANp(CRANdf)
+}
+\arguments{
+\item{CRANdf}{Optionally provide an updated CRAN data.frame (obtain with getCRAN())}
 }
 \description{
-Retrieve a list of packages on CRAN.
+Show a list of packages on CRAN.
 }
 \examples{
 
-# Retrieve CRAN packages
+# Show CRAN packages
 CRAN_packages()
 
 

@@ -4,10 +4,12 @@
 \alias{CRAN_collisions}
 \title{Check for Namespace Collisions}
 \usage{
-CRAN_collisions(function_or_package_name)
+CRAN_collisions(function_or_package_name, CRANdf)
 }
 \arguments{
 \item{function_or_package_name}{A character string, or vector of character strings.}
+
+\item{CRANdf}{Optionally provide an updated CRAN data.frame (obtain with getCRAN())}
 }
 \description{
 Check for namespace collisions with functions and packages on CRAN

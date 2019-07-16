@@ -3,9 +3,10 @@
 #' Check for namespace collisions with functions and packages on CRAN
 #' @name CRAN_collisions
 #'
-#' @usage CRAN_collisions(function_or_package_name)
+#' @usage CRAN_collisions(function_or_package_name, CRANdf)
 #'
 #' @param function_or_package_name A character string, or vector of character strings.
+#' @param CRANdf Optionally provide an updated CRAN data.frame (obtain with getCRAN())
 #'
 #' @import dplyr
 #' @import stringr
@@ -36,13 +37,11 @@
 
 
 
-CRAN_collisions <- function(function_or_package_name) {
-  packages_and_functions_dataframe <- NULL
-  # if(missing(check_packages)) { check_packages <- TRUE }
-  # if(missing(check_functions)) { check_functions <- TRUE }
-  # cran_packages <- get(load("data/packages_and_functions_dataframe.RData"))
-  data(packages_and_functions_dataframe, envir = environment())
-  cran_packages <- packages_and_functions_dataframe
+CRAN_collisions <- function(function_or_package_name, CRANdf) {
+
+  if(missing(CRANdf)) { CRANdf <- get("CRANdf", pos = "package:collidr") }
+
+  cran_packages <- CRANdf
   if(missing(function_or_package_name)) { stop("Please provide a function or package name to check") }
 
 
@@ -76,9 +75,10 @@ CRAN_collisions <- function(function_or_package_name) {
 #' Check for namespace collisions with packages on CRAN
 #' @name CRAN_package_collisions
 #'
-#' @usage CRAN_package_collisions(package_name)
+#' @usage CRAN_package_collisions(package_name, CRANdf)
 #'
 #' @param package_name A character string, or vector of character strings.
+#' @param CRANdf Optionally provide an updated CRAN data.frame (obtain with getCRAN())
 #'
 #' @import dplyr
 #' @import stringr
@@ -100,22 +100,16 @@ CRAN_collisions <- function(function_or_package_name) {
 #'
 #'
 
+CRAN_package_collisions <- function(package_name, CRANdf) {
+  if(missing(CRANdf)) { CRANdf <- get("CRANdf", pos = "package:collidr") }
 
-
-CRAN_package_collisions <- function(package_name) {
-  packages_and_functions_dataframe <- NULL
-  # if(missing(check_packages)) { check_packages <- TRUE }
-  # if(missing(check_functions)) { check_functions <- TRUE }
-  data(packages_and_functions_dataframe, envir = environment())
-  cran_packages <- packages_and_functions_dataframe
+  cran_packages <- CRANdf
   if(missing(package_name)) { stop("Please provide a function or package name to check") }
-
 
   # Returns whether or not a package name collision as occurred
 
   package_collisions <- which(cran_packages$package_names %in% package_name) %>%
     cran_packages$package_names[.] %>% unique(.)
-
 
   output_list <- list("packages"= NULL)
 
@@ -131,15 +125,15 @@ CRAN_package_collisions <- function(package_name) {
 
 
 
-
 #' Check for Namespace Collisions
 #'
 #' Check for namespace collisions with functions on CRAN
 #' @name CRAN_function_collisions
 #'
-#' @usage CRAN_function_collisions(function_name)
+#' @usage CRAN_function_collisions(function_name, CRANdf)
 #'
 #' @param function_name A character string, or vector of character strings.
+#' @param CRANdf Optionally provide an updated CRAN data.frame (obtain with getCRAN())
 #'
 #' @import dplyr
 #' @import stringr
@@ -162,12 +156,11 @@ CRAN_package_collisions <- function(package_name) {
 
 
 
-CRAN_function_collisions <- function(function_name) {
-  packages_and_functions_dataframe <- NULL
-  # if(missing(check_packages)) { check_packages <- TRUE }
-  # if(missing(check_functions)) { check_functions <- TRUE }
-  data(packages_and_functions_dataframe, envir = environment())
-  cran_packages <- packages_and_functions_dataframe
+CRAN_function_collisions <- function(function_name, CRANdf) {
+
+  if(missing(CRANdf)) { CRANdf <- get("CRANdf", pos = "package:collidr") }
+
+  cran_packages <- CRANdf
   if(missing(function_name)) { stop("Please provide a function or package name to check") }
 
 
@@ -199,12 +192,12 @@ CRAN_function_collisions <- function(function_name) {
 
 #' Show the packages and functions that are on CRAN
 #'
-#' Retrieve functions from CRAN.
+#' Show functions from CRAN.
 #' @name CRAN_packages_and_functions
 #'
-#' @usage CRAN_packages_and_functions()
+#' @usage CRAN_packages_and_functions(CRANdf)
 #'
-#'
+#' @param CRANdf Optionally provide an updated CRAN data.frame (obtain with getCRAN())
 #'
 #' @import dplyr
 #' @importFrom utils data
@@ -213,7 +206,7 @@ CRAN_function_collisions <- function(function_name) {
 #'
 #' @examples
 #'
-#' # Retrieve CRAN packages and functions
+#' # Show CRAN packages and functions
 #' CRAN_packages_and_functions()
 #'
 #'
@@ -221,10 +214,11 @@ CRAN_function_collisions <- function(function_name) {
 
 
 
-CRAN_packages_and_functions <- function() {
-  packages_and_functions_dataframe <- NULL
-  data(packages_and_functions_dataframe, envir = environment())
-  cran_packages <- packages_and_functions_dataframe
+CRAN_packages_and_functions <- function(CRANdf) {
+
+  if(missing(CRANdf)) { CRANdf <- get("CRANdf", pos = "package:collidr") }
+
+  cran_packages <- CRANdf
   cran_packages
 }
 
@@ -242,10 +236,12 @@ CRANpf <- CRAN_packages_and_functions
 
 #' Show the packages that are on CRAN
 #'
-#' Retrieve a list of packages on CRAN.
+#' Show a list of packages on CRAN.
 #' @name CRAN_packages
 #'
-#' @usage CRAN_packages()
+#' @usage CRAN_packages(CRANdf)
+#'
+#' @param CRANdf Optionally provide an updated CRAN data.frame (obtain with getCRAN())
 #'
 #' @import dplyr
 #' @importFrom utils data
@@ -254,17 +250,18 @@ CRANpf <- CRAN_packages_and_functions
 #'
 #' @examples
 #'
-#' # Retrieve CRAN packages
+#' # Show CRAN packages
 #' CRAN_packages()
 #'
 #'
 
 
 
-CRAN_packages <- function() {
-  packages_and_functions_dataframe <- NULL
-  data(packages_and_functions_dataframe, envir = environment())
-  cran_packages <- packages_and_functions_dataframe
+CRAN_packages <- function(CRANdf) {
+
+  if(missing(CRANdf)) { CRANdf <- get("CRANdf", pos = "package:collidr") }
+
+  cran_packages <- CRANdf
   cran_packages$package_names %>% unique
 }
 
@@ -280,10 +277,13 @@ CRANp <- CRAN_packages
 
 #' Show the functions that are on CRAN
 #'
-#' Retrieve functions from CRAN.
+#' Show functions from CRAN.
 #' @name CRAN_functions
 #'
-#' @usage CRAN_functions()
+#' @usage CRAN_functions(CRANdf)
+#'
+#' @param CRANdf Optionally provide an updated CRAN data.frame (obtain with getCRAN())
+#'
 #' @importFrom utils data
 #'
 #' @import dplyr
@@ -292,7 +292,7 @@ CRANp <- CRAN_packages
 #'
 #' @examples
 #'
-#' # Retrieve CRAN functions
+#' # Show CRAN functions
 #' CRAN_functions()
 #'
 #'
@@ -300,10 +300,11 @@ CRANp <- CRAN_packages
 
 
 
-CRAN_functions <- function() {
-  packages_and_functions_dataframe <- NULL
-  data(packages_and_functions_dataframe, envir = environment())
-  cran_packages <- packages_and_functions_dataframe
+CRAN_functions <- function(CRANdf) {
+
+  if(missing(CRANdf)) { CRANdf <- get("CRANdf", pos = "package:collidr") }
+
+  cran_packages <- CRANdf
   cran_packages$function_names %>% unique
 }
 
@@ -353,6 +354,7 @@ getCRAN <- function(last_updated = FALSE, api_key) {
                                            - please try again later") })
   pfd <- pfd[!duplicated(pfd),]
   pfd <- pfd %>% arrange(.data$package_names, .data$function_names)
+  pfd[] <- pfd %>% lapply(as.character)
 
   if(last_updated) {
     print("Retrieving time of last update")
