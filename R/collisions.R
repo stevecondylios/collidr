@@ -224,6 +224,7 @@ CRAN_packages_and_functions <- function(CRANdf) {
 
 
 #' @rdname CRAN_packages_and_functions
+#' @export
 CRANpf <- CRAN_packages_and_functions
 
 
@@ -267,6 +268,7 @@ CRAN_packages <- function(CRANdf) {
 
 
 #' @rdname CRAN_packages
+#' @export
 CRANp <- CRAN_packages
 
 
@@ -311,6 +313,7 @@ CRAN_functions <- function(CRANdf) {
 
 
 #' @rdname CRAN_functions
+#' @export
 CRANf <- CRAN_functions
 
 
