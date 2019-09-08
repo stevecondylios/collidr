@@ -6,12 +6,6 @@
 \usage{
 getCRAN(last_updated, api_key)
 }
-\arguments{
-\item{last_updated}{Set to TRUE to return the timestamp of the last update to the CRAN
-database file. Access via attributes()}
-
-\item{api_key}{An API key for collidr-api}
-}
 \description{
 Retrieve a more up to date data.frame of packages and functions from CRAN
 }

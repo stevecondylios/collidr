@@ -330,9 +330,6 @@ CRANf <- CRAN_functions
 #' @name getCRAN
 #'
 #' @usage getCRAN(last_updated, api_key)
-#' @param last_updated Set to TRUE to return the timestamp of the last update to the CRAN
-#' database file. Access via attributes()
-#' @param api_key An API key for collidr-api
 #' @importFrom utils data
 #'
 #' @import dplyr jsonlite
@@ -347,31 +344,30 @@ CRANf <- CRAN_functions
 #'
 #'
 #'
-getCRAN <- function(last_updated = FALSE, api_key) {
+getCRAN <- function() {
 
   print("Retrieving CRAN data..")
-  if(missing(api_key)) {api_key <- "ImT9osewvsrtvoYyCQP7pw"}
-  pfd <- tryCatch(paste0("http://www.collidr-api.com/flatfiles/", api_key) %>%
-                    fromJSON %>% as.data.frame %>% `colnames<-`(c("package_names", "function_names")),
-                  error=function(e) { stop("The collidr API is offline for maintenance
+
+  s3url <- "https://collidr-api.s3-ap-southeast-2.amazonaws.com/pfd.RDS"
+
+  pfd <- tryCatch(readRDS(url(s3url)),
+                  error=function(e) { stop("Something went wrong
                                            - please try again later") })
   pfd <- pfd[!duplicated(pfd),]
   pfd <- pfd %>% arrange(.data$package_names, .data$function_names)
   pfd[] <- pfd %>% lapply(as.character)
 
-  if(last_updated) {
-    print("Retrieving time of last update")
-    last_updated_url <- paste0("http://www.collidr-api.com/flatfiles/",
-                               api_key,
-                               "/lastupdated")
-    last_updated <- fromJSON(last_updated_url)
+    last_updated <- s3url %>% curlGetHeaders %>% .[5] %>% trimws %>%
+      strsplit(., "Last-Modified: ") %>%
+      .[[1]] %>% .[2] %>% strsplit(., " ") %>%
+      {.[[1]][-c(1,6)]} %>% paste0(., collapse=" ") %>%
+      as.POSIXct(., format="%d %b %Y %H:%M:%OS")
+    attr(last_updated, "tzone") <- "UTC"
     attr(pfd, "last_updated") <- last_updated
-    print(paste0("CRAN data last updated ", last_updated))
-  }
+    print(paste0("Data last updated ", last_updated, " UTC"))
 
   return(pfd)
 }
-
 
 
 
