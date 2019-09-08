@@ -329,7 +329,7 @@ CRANf <- CRAN_functions
 #' Retrieve a more up to date data.frame of packages and functions from CRAN
 #' @name getCRAN
 #'
-#' @usage getCRAN(last_updated, api_key)
+#' @usage getCRAN()
 #' @importFrom utils data
 #'
 #' @import dplyr jsonlite

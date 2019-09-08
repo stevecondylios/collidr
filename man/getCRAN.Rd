@@ -4,7 +4,7 @@
 \alias{getCRAN}
 \title{Retrieve a more up to date data.frame of packages and functions from CRAN}
 \usage{
-getCRAN(last_updated, api_key)
+getCRAN()
 }
 \description{
 Retrieve a more up to date data.frame of packages and functions from CRAN
