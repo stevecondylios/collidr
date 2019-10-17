@@ -361,7 +361,7 @@ getCRAN <- function() {
       strsplit(., "Last-Modified: ") %>%
       .[[1]] %>% .[2] %>% strsplit(., " ") %>%
       {.[[1]][-c(1,6)]} %>% paste0(., collapse=" ") %>%
-      as.POSIXct(., format="%d %b %Y %H:%M:%OS")
+      as.POSIXct(., format="%d %b %Y %H:%M:%OS", origin="UTC")
     attr(last_updated, "tzone") <- "UTC"
     attr(pfd, "last_updated") <- last_updated
     print(paste0("Data last updated ", last_updated, " UTC"))
