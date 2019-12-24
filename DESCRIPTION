@@ -1,6 +1,6 @@
 Package: collidr
 Type: Package
-Title: Check for Namespace Collisions with Other Packages and Functions on CRAN
+Title: Check for Namespace Collisions with Packages and Functions on CRAN
 Version: 0.1.2
 Imports: dplyr, stringr, jsonlite, utils
 Author: Steve Condylios [aut, cre] (<https://orcid.org/0000-0003-0599-844X>)
