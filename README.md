@@ -26,9 +26,9 @@ Distinctly named functions
 
   - reduce code ambiguity, and,
   - reduce unintentional function calls
-      - e.g. you may coded `select()` meaning `dplyr::select()`, but
-        instead invoked `MASS::select()` due to `MASS` being loaded
-        after `dplyr`
+      - e.g. you may code `select()` meaning `dplyr::select()`, but
+        instead invoking `MASS::select()` due to the `MASS` library
+        being loaded after `dplyr`
 
 ### Caveats
 
@@ -54,7 +54,7 @@ data.frame in S3. The data.frame is accessible for
 [download](https://collidr-api.s3-ap-southeast-2.amazonaws.com/pfd.RDS),
 or via `getCRAN()`
 
-![](man/figures/flowchart.png){:height=“700” width=“400”}
+![](man/figures/flowchart.png)
 
 ## Issues and Feature Requests
 
