@@ -27,8 +27,8 @@ Distinctly named functions
   - reduce code ambiguity, and,
   - reduce unintentional function calls
       - e.g. you may code `select()` meaning `dplyr::select()`, but
-        instead invoking `MASS::select()` due to the `MASS` library
-        being loaded after `dplyr`
+        instead (uninentionally) invoke `MASS::select()` due to the
+        `MASS` library being loaded *after* `dplyr`
 
 ### Caveats
 

@@ -5,3 +5,4 @@ temp/*
 .RData
 .Ruserdata
 .DS_Store
+docs
