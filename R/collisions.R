@@ -61,7 +61,7 @@ CRAN_collisions <- function(function_or_package_name, CRANdf) {
   output_list$packages <- package_collisions
   output_list$functions <- function_collisions
 
-  output_list %>% return
+  output_list
 
 }
 
@@ -115,7 +115,7 @@ CRAN_package_collisions <- function(package_name, CRANdf) {
 
   output_list$packages <- package_collisions
 
-  output_list %>% return
+  output_list
 
 }
 
@@ -179,7 +179,7 @@ CRAN_function_collisions <- function(function_name, CRANdf) {
 
   output_list$functions <- function_collisions
 
-  output_list %>% return
+  output_list
 
 }
 

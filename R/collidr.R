@@ -1,4 +1,4 @@
-#' collidr: Check for Namespace Collisions with Functions and Packages on CRAN
+#' @description collidr: Check for Namespace Collisions with Functions and Packages on CRAN
 #' @docType package
 #'
 #' @details

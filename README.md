@@ -78,3 +78,12 @@ package’s existing functions. Please ensure
   - Functions are sensibly named
   - The **intent** of the contribution is clear
   - At least one example is provided in the documentation
+
+## Build Info
+
+Whenever `CRANdf` is updated, use `save(CRANdf, file =
+"data/CRANdf.RData", version = 2, compress='xz')` to save it
+
+And build/check with:
+
+    R CMD build collidr && R CMD check collidr_0.1.3.tar.gz --as-cran

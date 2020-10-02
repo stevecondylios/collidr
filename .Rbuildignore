@@ -11,3 +11,5 @@ README.md
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
+README.Rmd
+_config.yml

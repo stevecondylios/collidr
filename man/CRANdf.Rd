@@ -4,7 +4,9 @@
 \name{CRANdf}
 \alias{CRANdf}
 \title{CRAN Package and Function Data: 1 May 2019}
-\format{An object of class \code{data.frame} with 294190 rows and 2 columns.}
+\format{
+An object of class \code{data.frame} with 524305 rows and 2 columns.
+}
 \source{
 The Comprehensive R Archive Network, <https://cran.r-project.org/web/packages/available_packages_by_name.html>
 }
