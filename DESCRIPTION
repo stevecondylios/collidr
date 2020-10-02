@@ -1,6 +1,6 @@
 Package: collidr
 Type: Package
-Title: Check for Namespace Collisions across Packages and Functions on CRAN
+Title: Check for Namespace Collisions Across Packages and Functions on CRAN
 Version: 0.1.3
 Imports: dplyr, stringr, jsonlite, utils
 Author: Steve Condylios [aut, cre] (<https://orcid.org/0000-0003-0599-844X>)
@@ -13,3 +13,4 @@ Description: Check for namespace collisions between a string input (your functio
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1
+Depends: R (>= 2.10)
